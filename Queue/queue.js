@@ -1,4 +1,4 @@
-// Queue data structure.  T
+// Queue data structure.
 // methods 'enqueue' and 'dequeue' add / remove elements from the queue
 // AND also maintain 'first-in first-out' behaviour
 
