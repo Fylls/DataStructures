@@ -1,6 +1,7 @@
-// Database implementation for handling products
+// Database implementation for handling products (w/ file)
 
-const database = []
+const fs = require("fs")
+const p = "products.json"
 
 // THIS will refer to the object created with the class
 // STATIC makes method accessible at class level
@@ -14,11 +15,21 @@ class Product {
   }
 
   save() {
-    database.push(this)
+    fs.readFile(p, (err, fileContent) => {
+      const products = []
+      if (!err) products = JSON.parse(fileContent)
+
+      products.push(this)
+
+      fs.writeFile(p, JSON.stringify(products), err => console.log(err))
+    })
   }
 
   static fetchAll() {
-    return database
+    fs.readFile(p, (err, fileContent) => {
+      if (err) return []
+      return JSON.parse(fileContent)
+    })
   }
 }
 

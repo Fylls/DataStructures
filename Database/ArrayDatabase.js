@@ -5,6 +5,7 @@ const database = []
 // THIS will refer to the object created with the class
 // STATIC makes method accessible at class level
 
+// DB has a Product collection (Schema)
 class Product {
   constructor(title, price, image, description) {
     this.title = title
