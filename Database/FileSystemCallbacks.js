@@ -7,10 +7,10 @@ const p = "products.json"
 // STATIC makes method accessible at class level
 
 // Helper Function
-const getProductsFromFile = async () => {
-  await fs.readFile(p, (err, fileContent) => {
-    if (err || !fileContent) return []
-    return JSON.parse(fileContent)
+const getProductsFromFile = cb => {
+  fs.readFile(p, (err, fileContent) => {
+    if (err) cb([])
+    else cb(JSON.parse(fileContent))
   })
 }
 
@@ -23,20 +23,21 @@ class Product {
     this.description = description
   }
 
-  async save() {
-    const products = JSON.parse(await getProductsFromFile())
-    products.push(this)
-    await fs.writeFileSync(p, JSON.stringify(products))
+  save() {
+    getProductsFromFile(products => {
+      products.push(this)
+      fs.writeFile(p, JSON.stringify(products))
+    })
   }
 
-  static async fetchAll() {
-    await getProductsFromFile()
+  static fetchAll(cb) {
+    getProductsFromFile(cb)
   }
 }
 
 // Crerating and saving a product
 const newProduct = new Product("Sasso", 10, "img", "un bel sasso")
-await newProduct.save()
+newProduct.save()
 
 // Getting all the products in the DB
-const allProducts = await Product.fetchAll()
+const allProducts = Product.fetchAll(products => console.log(products))

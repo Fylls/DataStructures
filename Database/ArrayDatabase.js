@@ -28,4 +28,4 @@ const newProduct = new Product("Sasso", 10, "img", "un bel sasso")
 newProduct.save()
 
 // Getting all the products in the DB
-Product.fetchAll()
+const allProducts = Product.fetchAll()
