@@ -9,7 +9,7 @@ const p = "products.json"
 // Helper Function
 const getProductsFromFile = cb => {
   fs.readFile(p, (err, fileContent) => {
-    if (err) cb([])
+    if (err || !fileContent) cb([])
     else cb(JSON.parse(fileContent))
   })
 }
