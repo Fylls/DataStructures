@@ -16,17 +16,18 @@ const getProductsFromFile = async () => {
 
 // DB has a Product collection (Schema)
 class Product {
-  constructor(title, price, image, description) {
+  constructor(id, title, imageUrl, description, price) {
+    this.id = id
     this.title = title
-    this.price = price
-    this.image = image
+    this.imageUrl = imageUrl
     this.description = description
+    this.price = price
   }
 
   async save() {
-    const products = JSON.parse(await getProductsFromFile())
+    const products = await getProductsFromFile()
     products.push(this)
-    await fs.writeFileSync(p, JSON.stringify(products))
+    fs.writeFileSync(p, JSON.stringify(products))
   }
 
   static async fetchAll() {
