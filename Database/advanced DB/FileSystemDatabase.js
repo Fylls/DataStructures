@@ -2,7 +2,6 @@
 
 const fs = require("fs")
 const p = "products.json"
-const Cart = require("./cart")
 
 // THIS will refer to the object created with the class
 // STATIC makes method accessible at class level
@@ -14,6 +13,7 @@ const getProductsFromFile = async () => {
     return JSON.parse(fileContent)
   })
 }
+
 // DB has a Product collection (Schema)
 class Product {
   constructor(id, title, imageUrl, description, price) {
@@ -42,16 +42,12 @@ class Product {
     }
   }
 
-  // Deleting a product by knowing its ID both in DB and CART
+  // Deleting a product by knowing its ID
 
   static async deleteById(id) {
     const products = await getProductsFromFile()
-    const product = products.find(prod => prod.id === id)
     const updatedProducts = products.filter(prod => prod.id !== id)
-
-    fs.writeFileSync(p, JSON.stringify(updatedProducts), err => {
-      if (!err) Cart.deleteProduct(id, product.price)
-    })
+    fs.writeFileSync(p, JSON.stringify(updatedProducts))
   }
 
   // getting all the products in the DB
@@ -85,7 +81,7 @@ await newProduct.save()
 newProduct.description = "un brutto sasso"
 await newProduct.save()
 
-// Deliting a product in both DB and Cart
+// Deliting a product in DB
 await Product.deleteById("21384610293840")
 
 // Getting all details of a product

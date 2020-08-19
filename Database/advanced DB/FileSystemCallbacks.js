@@ -2,7 +2,6 @@
 
 const fs = require("fs")
 const p = "products.json"
-const Cart = require("./cart")
 
 // THIS will refer to the object created with the class
 // STATIC makes method accessible at class level
@@ -61,7 +60,7 @@ class Product {
       const updatedProducts = products.filter(prod => prod.id !== id)
 
       fs.writeFile(p, JSON.stringify(updatedProducts), err => {
-        if (!err) Cart.deleteProduct(id, product.price)
+        console.log(err)
       })
     })
   }
